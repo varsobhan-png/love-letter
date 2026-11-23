@@ -9,407 +9,182 @@
 
 <style>
 * { box-sizing: border-box; }
-
-html, body {
-  margin: 0;
-  min-height: 100%;
-}
-
+html, body { margin: 0; min-height: 100%; }
 body {
-  min-height: 100vh;
-  overflow: hidden;
-  display: grid;
-  place-items: center;
+  min-height: 100vh; overflow: hidden;
+  display: grid; place-items: center;
   background: radial-gradient(ellipse at 50% 38%, #432033 0%, #241323 48%, #100b14 100%);
-  color: #fff4ee;
-  font-family: Tahoma, Arial, sans-serif;
+  color: #fff4ee; font-family: Tahoma, Arial, sans-serif;
 }
-
 .glow {
-  position: fixed;
-  width: 340px;
-  height: 340px;
-  border-radius: 50%;
-  background: #e83b65;
-  filter: blur(100px);
-  opacity: .13;
-  pointer-events: none;
+  position: fixed; width: 340px; height: 340px;
+  border-radius: 50%; background: #e83b65;
+  filter: blur(100px); opacity: .13; pointer-events: none;
 }
-
 .scene {
-  position: relative;
-  z-index: 2;
-  width: min(92vw, 540px);
-  min-height: 560px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  position: relative; z-index: 2;
+  width: min(92vw, 540px); min-height: 560px;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
   padding: 26px 12px;
 }
-
-.intro {
-  text-align: center;
-  margin-bottom: 30px;
-}
-
-h1 {
-  font-size: clamp(22px, 5vw, 30px);
-  font-weight: 500;
-  margin: 0 0 10px;
-}
-
-.hint {
-  color: #e9c6d0;
-  font-size: 13px;
-  line-height: 1.9;
-}
-
+.intro { text-align: center; margin-bottom: 30px; }
+h1 { font-size: clamp(22px, 5vw, 30px); font-weight: 500; margin: 0 0 10px; }
+.hint { color: #e9c6d0; font-size: 13px; line-height: 1.9; }
 .stage {
-  position: relative;
-  width: min(84vw, 370px);
-  height: 270px;
-  perspective: 1100px;
-  cursor: pointer;
-  -webkit-tap-highlight-color: transparent;
+  position: relative; width: min(84vw, 370px);
+  height: 270px; perspective: 1100px;
+  cursor: pointer; -webkit-tap-highlight-color: transparent;
 }
-
 .envelope {
-  position: absolute;
-  width: 100%;
-  height: 220px;
-  left: 0;
-  bottom: 0;
-  transform-style: preserve-3d;
+  position: absolute; width: 100%; height: 220px;
+  left: 0; bottom: 0; transform-style: preserve-3d;
   transition: transform 1s cubic-bezier(.2,.75,.2,1);
 }
-
 .env-back {
-  position: absolute;
-  inset: 0;
+  position:absolute; inset:0;
   background: linear-gradient(145deg,#f7e5d4,#d9bba7);
-  border-radius: 7px;
-  box-shadow: 0 22px 55px #0008;
+  border-radius: 7px; box-shadow: 0 22px 55px #0008;
 }
-
 .letter-peek {
-  position: absolute;
-  z-index: 1;
-  left: 8%;
-  width: 84%;
-  height: 150px;
-  bottom: 16px;
-  border-radius: 4px;
+  position:absolute; z-index:1; left:8%; width:84%;
+  height:150px; bottom:16px; border-radius:4px;
   background: linear-gradient(#fffaf2,#f1e5d6);
   transition: transform .9s .25s, bottom .9s .25s;
 }
-
 .flap {
-  position: absolute;
-  z-index: 4;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 58%;
+  position:absolute; z-index:4; top:0; left:0;
+  width:100%; height:58%;
   background: linear-gradient(145deg,#f9e9d9,#d8b49e);
   clip-path: polygon(0 0,100% 0,50% 100%);
-  transform-origin: top center;
-  transition: transform .8s ease;
+  transform-origin: top center; transition: transform .8s ease;
 }
-
-.left,.right,.bottom {
-  position: absolute;
-  inset: 0;
-  z-index: 3;
-}
-
-.left {
-  background: #e8d1c0;
-  clip-path: polygon(0 0,50% 50%,0 100%);
-}
-
-.right {
-  background: #dfc2ae;
-  clip-path: polygon(100% 0,50% 50%,100% 100%);
-}
-
+.left,.right,.bottom { position:absolute; inset:0; z-index:3; }
+.left { background:#e8d1c0; clip-path:polygon(0 0,50% 50%,0 100%); }
+.right { background:#dfc2ae; clip-path:polygon(100% 0,50% 50%,100% 100%); }
 .bottom {
-  background: linear-gradient(25deg,#e7cdb9,#f5e4d4);
-  clip-path: polygon(0 100%,50% 49%,100% 100%);
+  background:linear-gradient(25deg,#e7cdb9,#f5e4d4);
+  clip-path:polygon(0 100%,50% 49%,100% 100%);
 }
-
 .seal {
-  position: absolute;
-  z-index: 5;
-  left: 50%;
-  top: 51%;
-  transform: translate(-50%,-50%);
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  display: grid;
-  place-items: center;
-  color: #ffe2df;
-  font-size: 23px;
-  background: radial-gradient(circle at 35% 30%,#f46c70,#a20e2b 72%);
-  box-shadow: 0 4px 12px #65102688;
-  transition: opacity .35s, transform .35s;
+  position:absolute; z-index:5; left:50%; top:51%;
+  transform:translate(-50%,-50%); width:48px; height:48px;
+  border-radius:50%; display:grid; place-items:center;
+  color:#ffe2df; font-size:23px;
+  background:radial-gradient(circle at 35% 30%,#f46c70,#a20e2b 72%);
+  box-shadow:0 4px 12px #65102688;
+  transition:opacity .35s, transform .35s;
 }
-
-.stage.opened .flap {
-  transform: rotateX(180deg);
-  z-index: 0;
-}
-
-.stage.opened .seal {
-  opacity: 0;
-  transform: translate(-50%,-50%) scale(.5);
-}
-
-.stage.opened .letter-peek {
-  bottom: 92px;
-  transform: translateY(-38px);
-}
-
-.stage.turn .envelope {
-  animation: envelopeSpin .95s ease-in-out both;
-}
-
+.stage.opened .flap { transform:rotateX(180deg); z-index:0; }
+.stage.opened .seal { opacity:0; transform:translate(-50%,-50%) scale(.5); }
+.stage.opened .letter-peek { bottom:92px; transform:translateY(-38px); }
+.stage.turn .envelope { animation: envelopeSpin .95s ease-in-out both; }
 @keyframes envelopeSpin {
-  from { transform: rotateY(0); }
-  to { transform: rotateY(360deg); }
+  from {transform:rotateY(0)}
+  to {transform:rotateY(360deg)}
 }
-
-/* کاغذ نامه */
-
 .paper {
-  position: fixed;
-  z-index: 8;
-  left: 50%;
-  top: 50%;
-  width: min(88vw,390px);
-  height: min(72vh,620px);
-  min-height: 270px;
-  overflow-y: auto;
-  transform: translate(-50%,-35%) scale(.12) rotateX(75deg);
-  opacity: 0;
-  pointer-events: none;
-  border-radius: 5px;
-  background: linear-gradient(145deg,#fffdf7,#f0e4d5);
-  color: #633c48;
-  box-shadow: 0 18px 50px #0009;
-  padding: 25px 22px;
-  transition: transform .85s cubic-bezier(.2,.8,.2,1), opacity .6s;
+  position:fixed; z-index:8; left:50%; top:50%;
+  width:min(88vw,390px); height:min(72vh,620px);
+  min-height:270px; overflow-y:auto;
+  transform:translate(-50%,-35%) scale(.12) rotateX(75deg);
+  opacity:0; pointer-events:none; border-radius:5px;
+  background:linear-gradient(145deg,#fffdf7,#f0e4d5);
+  color:#633c48; box-shadow:0 18px 50px #0009;
+  padding:25px 22px;
+  transition:transform .85s cubic-bezier(.2,.8,.2,1), opacity .6s;
 }
-
 .paper::before {
-  content: "";
-  position: absolute;
-  inset: 9px;
-  border: 1px solid #d9b8a9;
-  pointer-events: none;
+  content:""; position:absolute; inset:9px;
+  border:1px solid #d9b8a9; pointer-events:none;
 }
-
-.paper h2,.paper p,.paper .sign {
-  opacity: 0;
-  transition: opacity .35s;
-}
-
-.paper.unfolded h2,
-.paper.unfolded p,
-.paper.unfolded .sign {
-  opacity: 1;
-}
-
+.paper h2,.paper p,.paper .sign { opacity:0; transition:opacity .35s; }
+.paper.unfolded h2,.paper.unfolded p,.paper.unfolded .sign { opacity:1; }
 .paper h2 {
-  position: relative;
-  font-size: 20px;
-  text-align: center;
-  margin: 4px 0 16px;
-  color: #a33c55;
-  font-weight: 500;
+  position:relative; font-size:20px; text-align:center;
+  margin:4px 0 16px; color:#a33c55; font-weight:500;
 }
-
 .paper p {
-  position: relative;
-  font-size: 14px;
-  line-height: 2.15;
-  margin: 0;
-  text-align: right;
-  white-space: pre-line;
+  position:relative; font-size:14px; line-height:2.15;
+  margin:0; text-align:right; white-space:pre-line;
 }
-
 .paper .sign {
-  position: relative;
-  text-align: left;
-  margin-top: 18px;
-  color: #a33c55;
-  font-size: 13px;
+  position:relative; text-align:left;
+  margin-top:18px; color:#a33c55; font-size:13px;
 }
-
 .paper.visible {
-  opacity: 1;
-  pointer-events: auto;
-  transform: translate(-50%,-50%) scale(1) rotateX(0);
+  opacity:1; pointer-events:auto;
+  transform:translate(-50%,-50%) scale(1) rotateX(0);
 }
-
-.paper.unfolded {
-  min-height: 270px;
-}
-
-.paper.unfolded p {
-  animation: reveal .8s both;
-}
-
+.paper.unfolded { min-height:270px; }
+.paper.unfolded p { animation: reveal .8s both; }
 @keyframes reveal {
-  from {
-    opacity: 0;
-    transform: translateY(8px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from {opacity:0; transform:translateY(8px)}
+  to {opacity:1; transform:translateY(0)}
 }
-
-/* پیام سورپرایزی */
-
 .message-overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 20;
-  display: grid;
-  place-items: center;
-  padding: 20px;
-  background: #09060bcc;
-  opacity: 0;
-  visibility: hidden;
-  transition: .4s;
+  position:fixed; inset:0; z-index:20;
+  display:grid; place-items:center; padding:20px;
+  background:#09060bcc; opacity:0; visibility:hidden;
+  transition:.4s;
 }
-
-.message-overlay.show {
-  opacity: 1;
-  visibility: visible;
-}
-
+.message-overlay.show { opacity:1; visibility:visible; }
 .message-box {
-  width: min(90vw,390px);
-  padding: 30px 24px;
-  text-align: center;
-  border-radius: 18px;
-  background: linear-gradient(145deg,#fff8f3,#f0dce0);
-  color: #633c48;
-  box-shadow: 0 15px 60px #0009;
-  transform: scale(.8);
-  transition: .4s;
+  width:min(90vw,390px); padding:30px 24px;
+  text-align:center; border-radius:18px;
+  background:linear-gradient(145deg,#fff8f3,#f0dce0);
+  color:#633c48; box-shadow:0 15px 60px #0009;
+  transform:scale(.8); transition:.4s;
 }
-
-.message-overlay.show .message-box {
-  transform: scale(1);
-}
-
-.message-heart {
-  font-size: 35px;
-  margin-bottom: 15px;
-}
-
-.message-box p {
-  font-size: 15px;
-  line-height: 2.2;
-  margin: 0 0 12px;
-}
-
+.message-overlay.show .message-box { transform:scale(1); }
+.message-heart { font-size:35px; margin-bottom:15px; }
+.message-box p { font-size:15px; line-height:2.2; margin:0 0 12px; }
 .message-box span {
-  display: block;
-  font-size: 12px;
-  color: #a33c55;
-  margin-bottom: 22px;
+  display:block; font-size:12px; color:#a33c55; margin-bottom:22px;
 }
-
-.message-box button,
-.paper-close {
-  border: 0;
-  border-radius: 25px;
-  padding: 11px 23px;
-  background: #a83b58;
-  color: white;
-  font-family: Tahoma;
-  cursor: pointer;
+.message-box button,.paper-close {
+  border:0; border-radius:25px; padding:11px 23px;
+  background:#a83b58; color:white; font-family:Tahoma; cursor:pointer;
 }
-
 .footer {
-  position: absolute;
-  bottom: 20px;
-  color: #bd9aa8;
-  font-size: 11px;
-  opacity: .75;
+  position:absolute; bottom:20px;
+  color:#bd9aa8; font-size:11px; opacity:.75;
 }
-
-/* قلب های متحرک */
-
 .heart {
-  position: fixed;
-  bottom: -35px;
-  z-index: 1;
-  color: #ef4266;
-  font-size: 18px;
-  opacity: 0;
-  text-shadow: 0 0 14px #ff557788;
-  animation: floatUp linear forwards;
-  pointer-events: none;
+  position:fixed; bottom:-35px; z-index:1;
+  color:#ef4266; font-size:18px; opacity:0;
+  text-shadow:0 0 14px #ff557788;
+  animation:floatUp linear forwards; pointer-events:none;
 }
-
 @keyframes floatUp {
-  0% {
-    transform: translateY(0) rotate(0) scale(.7);
-    opacity: 0;
-  }
-  12% { opacity: .9; }
-  85% { opacity: .7; }
-  100% {
-    transform: translateY(-115vh) rotate(35deg) scale(1.35);
-    opacity: 0;
-  }
+  0% {transform:translateY(0) rotate(0) scale(.7);opacity:0}
+  12% {opacity:.9}
+  85% {opacity:.7}
+  100% {transform:translateY(-115vh) rotate(35deg) scale(1.35);opacity:0}
 }
-
 .stage-label {
-  position: absolute;
-  bottom: -34px;
-  width: 100%;
-  text-align: center;
-  color: #e9c6d0;
-  font-size: 12px;
+  position:absolute; bottom:-34px; width:100%;
+  text-align:center; color:#e9c6d0; font-size:12px;
 }
-
 .paper-close {
-  display: none;
-  position: relative;
-  margin: 17px auto 0;
-  font-size: 12px;
+  display:none; position:relative; margin:17px auto 0; font-size:12px;
 }
-
-.paper.unfolded .paper-close {
-  display: block;
-}
-
+.paper.unfolded .paper-close { display:block; }
 @media(max-height:650px) {
-  .scene { transform: scale(.86); }
-  .footer { bottom: 8px; }
+  .scene {transform:scale(.86)}
+  .footer {bottom:8px}
 }
 </style>
 </head>
 
 <body>
-
 <div class="glow"></div>
 
-<!-- آهنگ پس زمینه -->
 <audio id="bgMusic" loop preload="auto">
-  <source src="music.mp3" type="audio/mpeg">
+  <source src="./music.m4a" type="audio/mp4">
 </audio>
 
 <main class="scene">
-
   <header class="intro">
     <h1>یه نامه برای تو… ❤️</h1>
     <div class="hint" id="hint">
@@ -417,10 +192,7 @@ h1 {
     </div>
   </header>
 
-  <!-- پاکت نامه -->
-
-  <div class="stage" id="stage" role="button" tabindex="0">
-
+  <div class="stage" id="stage" role="button" tabindex="0" aria-label="باز کردن پاکت نامه">
     <div class="envelope">
       <div class="env-back"></div>
       <div class="letter-peek"></div>
@@ -430,40 +202,23 @@ h1 {
       <div class="bottom"></div>
       <div class="seal">♥</div>
     </div>
-
-    <div class="stage-label" id="stageLabel">
-      لمس کن تا نامه بچرخه…
-    </div>
-
+    <div class="stage-label" id="stageLabel">لمس کن تا نامه بچرخه…</div>
   </div>
-
-  <!-- پیام سورپرایزی -->
 
   <div class="message-overlay" id="messageOverlay">
     <div class="message-box">
-
       <div class="message-heart">❤️</div>
-
       <p>
         من شاید نتونم حرف‌های قشنگ و احساسی خوبی بزنم،
         ولی تمام این متن رو خودم نوشتم و برای کدنویسی این خیلی زحمت کشیدم 😁
       </p>
-
       <span>(متن ادامه داره و اسکرول کن!)</span>
-
-      <button id="continueMessage">
-        بریم سراغ نامه ❤️
-      </button>
-
+      <button id="continueMessage">بریم سراغ نامه ❤️</button>
     </div>
   </div>
 
-  <!-- نامه اصلی -->
-
   <article class="paper" id="paper">
-
     <h2>برای تو ❤️</h2>
-
     <p id="letterText">از اینکه با هم، حتی اگه کم و کوتاه بوده، اون همه خاطره داریم خیلی خوشحالم. چشمات هیچ‌وقت یادم نمیره و اینکه چقدر دوستت داشتم و هنوزم چقدر دوستت دارم...
 
 هنوزم وقتی اسمت میاد، قلبم می‌لرزه و برای چند لحظه خودمو گم می‌کنم.
@@ -494,66 +249,49 @@ h1 {
 
 دوستت ندارم، عاشقتم❤️</p>
 
-    <div class="sign">
-      برای سیندرلای رویاهای من✨
-    </div>
-
-    <button class="paper-close" id="closePaper">
-      بستن نامه
-    </button>
-
+    <div class="sign">برای سیندرلای رویاهای من✨</div>
+    <button class="paper-close" id="closePaper">بستن نامه</button>
   </article>
-
 </main>
 
 <div class="footer">ساخته‌شده با عشق ♥</div>
 
 <script>
 (() => {
-
   const stage = document.getElementById('stage');
   const paper = document.getElementById('paper');
   const hint = document.getElementById('hint');
   const label = document.getElementById('stageLabel');
   const close = document.getElementById('closePaper');
   const music = document.getElementById('bgMusic');
-
   const messageOverlay = document.getElementById('messageOverlay');
   const continueMessage = document.getElementById('continueMessage');
 
   let step = 0;
+  let musicStarted = false;
 
   music.volume = 0.5;
 
-  // پخش آهنگ
   function playMusic() {
-    if (music.paused) {
-      music.play().catch(() => {});
-    }
+    if (musicStarted) return;
+    music.play().then(() => {
+      musicStarted = true;
+    }).catch(error => {
+      console.warn('پخش موسیقی انجام نشد:', error);
+    });
   }
 
-  // تلاش برای پخش خودکار
-  window.addEventListener('load', playMusic);
-
-  // مراحل باز شدن نامه
   function advance() {
-
     if (step === 0) {
-
       playMusic();
-
       stage.classList.add('turn');
-
       label.textContent = 'حالا دوباره روی پاکت بزن…';
       hint.textContent = 'یه چیزی داخل این پاکت منتظرته…';
-
       step = 1;
 
     } else if (step === 1) {
-
       stage.classList.remove('turn');
       stage.classList.add('opened');
-
       label.textContent = 'نامه داره باز میشه…';
       hint.textContent = 'یه سورپرایز کوچیک برات دارم…';
 
@@ -568,74 +306,48 @@ h1 {
 
   stage.addEventListener('click', advance);
 
-  stage.addEventListener('keydown', e => {
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
+  stage.addEventListener('keydown', event => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
       advance();
     }
   });
 
-  // بستن پیام و باز کردن نامه
   continueMessage.addEventListener('click', () => {
-
     messageOverlay.classList.remove('show');
-
     paper.classList.add('unfolded');
-
     label.textContent = 'نامه‌ات باز شد ❤️';
     hint.textContent = 'با خیال راحت بخون... ❤️';
-
     step = 3;
-
   });
 
-  // بستن نامه و شروع مجدد
-  close.addEventListener('click', e => {
-
-    e.stopPropagation();
-
-    paper.classList.remove('unfolded','visible');
-
+  close.addEventListener('click', event => {
+    event.stopPropagation();
+    paper.classList.remove('unfolded', 'visible');
     messageOverlay.classList.remove('show');
-
-    stage.classList.remove('opened','turn');
-
+    stage.classList.remove('opened', 'turn');
     step = 0;
-
     label.textContent = 'لمس کن تا نامه بچرخه…';
-
     hint.textContent = 'برای دیدن چیزی که برات آماده شده، روی نامه بزن.';
-
   });
 
-  // قلب های متحرک
   function heart() {
-
     const h = document.createElement('span');
-
     h.className = 'heart';
-
     h.textContent = Math.random() > .25 ? '♥' : '❤';
-
-    h.style.left = (Math.random()*100)+'vw';
-
-    h.style.fontSize = (12+Math.random()*20)+'px';
-
-    h.style.animationDuration = (6+Math.random()*6)+'s';
-
+    h.style.left = (Math.random() * 100) + 'vw';
+    h.style.fontSize = (12 + Math.random() * 20) + 'px';
+    h.style.animationDuration = (6 + Math.random() * 6) + 's';
     document.body.appendChild(h);
-
-    setTimeout(() => h.remove(),12500);
+    setTimeout(() => h.remove(), 12500);
   }
 
-  for(let i=0;i<9;i++) {
-    setTimeout(heart,i*450);
+  for (let i = 0; i < 9; i++) {
+    setTimeout(heart, i * 450);
   }
 
-  setInterval(heart,850);
-
+  setInterval(heart, 850);
 })();
 </script>
-
 </body>
 </html>
