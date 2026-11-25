@@ -4,352 +4,324 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#170d16">
-<title>یک نامه برای تو ❤️</title>
+<title>برای تو ❤️</title>
 
 <style>
-* { box-sizing: border-box; }
-html, body { margin: 0; min-height: 100%; }
+* {
+  box-sizing: border-box;
+}
+
 body {
-  min-height: 100vh; overflow: hidden;
-  display: grid; place-items: center;
-  background: radial-gradient(ellipse at 50% 38%, #432033 0%, #241323 48%, #100b14 100%);
-  color: #fff4ee; font-family: Tahoma, Arial, sans-serif;
+  min-height: 100vh;
+  margin: 0;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  background: radial-gradient(
+    ellipse at 50% 38%,
+    #dff4ff 0%,
+    #b9e3f8 48%,
+    #91c9eb 100%
+  );
+  color: #35566d;
+  font-family: Tahoma, Arial, sans-serif;
 }
+
 .glow {
-  position: fixed; width: 340px; height: 340px;
-  border-radius: 50%; background: #e83b65;
-  filter: blur(100px); opacity: .13; pointer-events: none;
+  position: fixed;
+  width: 350px;
+  height: 350px;
+  border-radius: 50%;
+  background: #ffffff;
+  filter: blur(100px);
+  opacity: .4;
+  pointer-events: none;
 }
-.scene {
-  position: relative; z-index: 2;
-  width: min(92vw, 540px); min-height: 560px;
-  display: flex; flex-direction: column;
-  align-items: center; justify-content: center;
-  padding: 26px 12px;
-}
-.intro { text-align: center; margin-bottom: 30px; }
-h1 { font-size: clamp(22px, 5vw, 30px); font-weight: 500; margin: 0 0 10px; }
-.hint { color: #e9c6d0; font-size: 13px; line-height: 1.9; }
+
 .stage {
-  position: relative; width: min(84vw, 370px);
-  height: 270px; perspective: 1100px;
-  cursor: pointer; -webkit-tap-highlight-color: transparent;
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
 }
-.envelope {
-  position: absolute; width: 100%; height: 220px;
-  left: 0; bottom: 0; transform-style: preserve-3d;
-  transition: transform 1s cubic-bezier(.2,.75,.2,1);
+
+.hint, .stage-label {
+  color: #456b85;
+  text-align: center;
 }
-.env-back {
-  position:absolute; inset:0;
-  background: linear-gradient(145deg,#f7e5d4,#d9bba7);
-  border-radius: 7px; box-shadow: 0 22px 55px #0008;
-}
-.letter-peek {
-  position:absolute; z-index:1; left:8%; width:84%;
-  height:150px; bottom:16px; border-radius:4px;
-  background: linear-gradient(#fffaf2,#f1e5d6);
-  transition: transform .9s .25s, bottom .9s .25s;
-}
-.flap {
-  position:absolute; z-index:4; top:0; left:0;
-  width:100%; height:58%;
-  background: linear-gradient(145deg,#f9e9d9,#d8b49e);
-  clip-path: polygon(0 0,100% 0,50% 100%);
-  transform-origin: top center; transition: transform .8s ease;
-}
-.left,.right,.bottom { position:absolute; inset:0; z-index:3; }
-.left { background:#e8d1c0; clip-path:polygon(0 0,50% 50%,0 100%); }
-.right { background:#dfc2ae; clip-path:polygon(100% 0,50% 50%,100% 100%); }
-.bottom {
-  background:linear-gradient(25deg,#e7cdb9,#f5e4d4);
-  clip-path:polygon(0 100%,50% 49%,100% 100%);
-}
-.seal {
-  position:absolute; z-index:5; left:50%; top:51%;
-  transform:translate(-50%,-50%); width:48px; height:48px;
-  border-radius:50%; display:grid; place-items:center;
-  color:#ffe2df; font-size:23px;
-  background:radial-gradient(circle at 35% 30%,#f46c70,#a20e2b 72%);
-  box-shadow:0 4px 12px #65102688;
-  transition:opacity .35s, transform .35s;
-}
-.stage.opened .flap { transform:rotateX(180deg); z-index:0; }
-.stage.opened .seal { opacity:0; transform:translate(-50%,-50%) scale(.5); }
-.stage.opened .letter-peek { bottom:92px; transform:translateY(-38px); }
-.stage.turn .envelope { animation: envelopeSpin .95s ease-in-out both; }
-@keyframes envelopeSpin {
-  from {transform:rotateY(0)}
-  to {transform:rotateY(360deg)}
-}
-.paper {
-  position:fixed; z-index:8; left:50%; top:50%;
-  width:min(88vw,390px); height:min(72vh,620px);
-  min-height:270px; overflow-y:auto;
-  transform:translate(-50%,-35%) scale(.12) rotateX(75deg);
-  opacity:0; pointer-events:none; border-radius:5px;
-  background:linear-gradient(145deg,#fffdf7,#f0e4d5);
-  color:#633c48; box-shadow:0 18px 50px #0009;
-  padding:25px 22px;
-  transition:transform .85s cubic-bezier(.2,.8,.2,1), opacity .6s;
-}
-.paper::before {
-  content:""; position:absolute; inset:9px;
-  border:1px solid #d9b8a9; pointer-events:none;
-}
-.paper h2,.paper p,.paper .sign { opacity:0; transition:opacity .35s; }
-.paper.unfolded h2,.paper.unfolded p,.paper.unfolded .sign { opacity:1; }
-.paper h2 {
-  position:relative; font-size:20px; text-align:center;
-  margin:4px 0 16px; color:#a33c55; font-weight:500;
-}
-.paper p {
-  position:relative; font-size:14px; line-height:2.15;
-  margin:0; text-align:right; white-space:pre-line;
-}
-.paper .sign {
-  position:relative; text-align:left;
-  margin-top:18px; color:#a33c55; font-size:13px;
-}
-.paper.visible {
-  opacity:1; pointer-events:auto;
-  transform:translate(-50%,-50%) scale(1) rotateX(0);
-}
-.paper.unfolded { min-height:270px; }
-.paper.unfolded p { animation: reveal .8s both; }
-@keyframes reveal {
-  from {opacity:0; transform:translateY(8px)}
-  to {opacity:1; transform:translateY(0)}
-}
-.message-overlay {
-  position:fixed; inset:0; z-index:20;
-  display:grid; place-items:center; padding:20px;
-  background:#09060bcc; opacity:0; visibility:hidden;
-  transition:.4s;
-}
-.message-overlay.show { opacity:1; visibility:visible; }
-.message-box {
-  width:min(90vw,390px); padding:30px 24px;
-  text-align:center; border-radius:18px;
-  background:linear-gradient(145deg,#fff8f3,#f0dce0);
-  color:#633c48; box-shadow:0 15px 60px #0009;
-  transform:scale(.8); transition:.4s;
-}
-.message-overlay.show .message-box { transform:scale(1); }
-.message-heart { font-size:35px; margin-bottom:15px; }
-.message-box p { font-size:15px; line-height:2.2; margin:0 0 12px; }
-.message-box span {
-  display:block; font-size:12px; color:#a33c55; margin-bottom:22px;
-}
-.message-box button,.paper-close {
-  border:0; border-radius:25px; padding:11px 23px;
-  background:#a83b58; color:white; font-family:Tahoma; cursor:pointer;
-}
-.footer {
-  position:absolute; bottom:20px;
-  color:#bd9aa8; font-size:11px; opacity:.75;
-}
-.heart {
-  position:fixed; bottom:-35px; z-index:1;
-  color:#ef4266; font-size:18px; opacity:0;
-  text-shadow:0 0 14px #ff557788;
-  animation:floatUp linear forwards; pointer-events:none;
-}
-@keyframes floatUp {
-  0% {transform:translateY(0) rotate(0) scale(.7);opacity:0}
-  12% {opacity:.9}
-  85% {opacity:.7}
-  100% {transform:translateY(-115vh) rotate(35deg) scale(1.35);opacity:0}
-}
+
 .stage-label {
-  position:absolute; bottom:-34px; width:100%;
-  text-align:center; color:#e9c6d0; font-size:12px;
+  margin-bottom: 25px;
+  font-size: 15px;
 }
-.paper-close {
-  display:none; position:relative; margin:17px auto 0; font-size:12px;
+
+.envelope {
+  position: relative;
+  width: min(320px, 85vw);
+  height: 210px;
+  cursor: pointer;
+  transition: transform .5s;
+  perspective: 1000px;
 }
-.paper.unfolded .paper-close { display:block; }
-@media(max-height:650px) {
-  .scene {transform:scale(.86)}
-  .footer {bottom:8px}
+
+.envelope:hover {
+  transform: translateY(-5px);
+}
+
+.envelope-body {
+  position: absolute;
+  inset: 0;
+  background: #f7c8d8;
+  border-radius: 8px;
+  box-shadow: 0 15px 35px #477b9e44;
+  z-index: 2;
+}
+
+.envelope-body::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, #f8d7e2, #edabc5);
+  clip-path: polygon(0 0, 100% 0, 50% 65%);
+  border-radius: 8px;
+}
+
+.envelope-flap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #e99fbd;
+  clip-path: polygon(0 0, 100% 0, 50% 55%);
+  transform-origin: top;
+  transition: transform .8s ease;
+  z-index: 4;
+}
+
+.envelope.open .envelope-flap {
+  transform: rotateX(180deg);
+  z-index: 1;
+}
+
+.envelope-heart {
+  position: absolute;
+  top: 75px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 5;
+  font-size: 35px;
+  transition: opacity .3s;
+}
+
+.envelope.open .envelope-heart {
+  opacity: 0;
+}
+
+.paper {
+  position: fixed;
+  z-index: 8;
+  width: min(90vw, 520px);
+  height: min(72vh, 620px);
+  overflow-y: auto;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -40%) scale(.7);
+  opacity: 0;
+  visibility: hidden;
+  background: #fffafc;
+  border-radius: 15px;
+  padding: 35px 25px;
+  box-shadow: 0 15px 50px #477b9e44;
+  transition: all .8s ease;
+  scrollbar-width: thin;
+  scrollbar-color: #e9b4c9 transparent;
+}
+
+.paper.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.paper-content {
+  color: #58404b;
+  font-size: 15px;
+  line-height: 2.4;
+  white-space: pre-line;
+  text-align: right;
+}
+
+.signature {
+  margin-top: 25px;
+  text-align: center;
+  color: #d66b9a;
+  font-size: 17px;
+  font-weight: bold;
+}
+
+.scroll-hint {
+  position: fixed;
+  z-index: 15;
+  bottom: 22px;
+  left: 50%;
+  transform: translateX(-50%) translateY(10px);
+  background: #ffffffdd;
+  color: #477b9e;
+  padding: 11px 25px;
+  border-radius: 30px;
+  font-size: 14px;
+  font-weight: bold;
+  box-shadow: 0 5px 20px #477b9e33;
+  opacity: 0;
+  visibility: hidden;
+  transition: .4s;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+.scroll-hint.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+}
+
+.heart {
+  position: fixed;
+  bottom: -30px;
+  z-index: 1;
+  pointer-events: none;
+  animation: floatUp linear forwards;
+  opacity: .7;
+}
+
+@keyframes floatUp {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 0;
+  }
+  15% {
+    opacity: .8;
+  }
+  100% {
+    transform: translateY(-110vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+.footer {
+  position: fixed;
+  bottom: 12px;
+  color: #527b96;
+  font-size: 11px;
+  opacity: .8;
 }
 </style>
 </head>
 
 <body>
+
 <div class="glow"></div>
 
-<audio id="bgMusic" loop preload="auto">
-  <source src="./music.m4a" type="audio/mp4">
-</audio>
+<main class="stage">
+  <div class="stage-label">یه نامه برای تو دارم... 💌</div>
 
-<main class="scene">
-  <header class="intro">
-    <h1>یه نامه برای تو… ❤️</h1>
-    <div class="hint" id="hint">
-      برای دیدن چیزی که برات آماده شده، روی نامه بزن.
-    </div>
-  </header>
-
-  <div class="stage" id="stage" role="button" tabindex="0" aria-label="باز کردن پاکت نامه">
-    <div class="envelope">
-      <div class="env-back"></div>
-      <div class="letter-peek"></div>
-      <div class="flap"></div>
-      <div class="left"></div>
-      <div class="right"></div>
-      <div class="bottom"></div>
-      <div class="seal">♥</div>
-    </div>
-    <div class="stage-label" id="stageLabel">لمس کن تا نامه بچرخه…</div>
+  <div class="envelope" id="envelope">
+    <div class="envelope-body"></div>
+    <div class="envelope-flap"></div>
+    <div class="envelope-heart">❤️</div>
   </div>
 
-  <div class="message-overlay" id="messageOverlay">
-    <div class="message-box">
-      <div class="message-heart">❤️</div>
-      <p>
-        من شاید نتونم حرف‌های قشنگ و احساسی خوبی بزنم،
-        ولی تمام این متن رو خودم نوشتم و برای کدنویسی این خیلی زحمت کشیدم 😁
-      </p>
-      <span>(متن ادامه داره و اسکرول کن!)</span>
-      <button id="continueMessage">بریم سراغ نامه ❤️</button>
-    </div>
-  </div>
-
-  <article class="paper" id="paper">
-    <h2>برای تو ❤️</h2>
-    <p id="letterText">از اینکه با هم، حتی اگه کم و کوتاه بوده، اون همه خاطره داریم خیلی خوشحالم. چشمات هیچ‌وقت یادم نمیره و اینکه چقدر دوستت داشتم و هنوزم چقدر دوستت دارم...
-
-هنوزم وقتی اسمت میاد، قلبم می‌لرزه و برای چند لحظه خودمو گم می‌کنم.
-
-من معنای واقعی عشق رو وقتی فهمیدم که دیدم عشق فقط دوست داشتن یه نفر نیست. مهم اینه که طرف مقابل هم به همون اندازه که دوستش داری، دوستت داشته باشه، بهت اهمیت بده و برات ارزش قائل باشه. عشق وقتی قشنگه که دوطرفه باشه.
-
-شاید کاری که می‌کنم اشتباه باشه، شاید منتظر موندن کار درستی نباشه، ولی من نمی‌تونم برخلاف قلبم رفتار کنم. قلبم عاشقت شده و هنوزم نمی‌تونه ازت دست بکشه.
-
-عشق حس عجیبیه؛ وقتی عاشق باشی، دنیا برات فرق می‌کنه. نگاهت به همه‌چیز عوض می‌شه. حتی وقتی یه اتفاق ساده می‌افته، با خودت می‌گی کاش الان کنارم بودی، کاش بغلت می‌کردم، کاش کمرت رو محکم می‌گرفتم و می‌تونستم ساعت‌ها ببوسمت...
-
-خاطرات هیچ‌وقت از بین نمی‌رن. شاید یادت نیاد، ولی حدود پنج سال پیش، وقتی گریه کردی، از اینکه ناراحتت کرده بودم دلم می‌خواست خودمو آتیش بزنم. ناراحتی تو همیشه برای من مهم بوده، حتی اون موقع که شاید خودت نمی‌دونستی.
-
-هنوزم پیگیرتم. صدات برای من ارزش همه‌چیز رو داره و دیدنت به کل دنیا می‌ارزه.
-
-از مدرسه که برمی‌گردم، اولین کسی که به ذهنم میاد تویی، قبل خواب تویی، توی مغازه تویی، بیرون از خونه هم باز فکرم پیش توئه. خلاصه هر جا که باشم، یه گوشه از ذهنم همیشه درگیر توئه.
-
-دلیل خیلی از فکر کردن‌هام تویی، دلیل دست‌وپا زدن‌هام تویی، دلیل کار کردن و تلاش کردنم تویی...
-
-اگه یه روزی به هر دلیلی کنارت نبودم یا نتونستم بهت برسم، فقط اینو بدون که واقعاً دوستت داشتم و خواهم داشت. می‌گن عشق اول هیچ‌وقت فراموش نمی‌شه؛ مخصوصاً وقتی واقعاً از ته قلبت عاشق شده باشی.
-
-یه چیز دیگه هم هست؛ چه با هم دوست باشیم، چه قهر، اگه یه وقت دیدی واکنشی نشون نمی‌دم یا سکوت کردم، فکر نکن دیگه دوستت ندارم. شاید فقط شرایط جوری هست که کاری از دستم برنمیاد.
-
-خنده تو خنده منه، غم تو غم منه. حتی اگه نتونم کنارت باشم، خوشحالیت همیشه برام مهمه.
-
-راستی یه کادو هم برات گرفتم که وقتی تونستم بهت میدم😁
-
-نمی‌دونم آینده چی می‌شه، نمی‌دونم قسمت می‌شه کنار هم باشیم یا نه، ولی یه چیزی رو مطمئنم؛ احساسی که بهت دارم واقعی بوده و هنوزم هست.
-
-      کاش وقتی که با دوستات رفتی بیرون بیام و ببینمت.
-
-دوستت ندارم، عاشقتم❤️</p>
-
-    <div class="sign">برای سیندرلای رویاهای من✨</div>
-    <button class="paper-close" id="closePaper">بستن نامه</button>
-  </article>
+  <div class="hint">برای باز کردن نامه لمس کن 💗</div>
 </main>
 
-<div class="footer">ساخته‌شده با عشق ♥</div>
+<div class="paper" id="paper">
+  <div class="paper-content">
+سلام دورت بگردم
+
+امروز هر چی گشتم پیدات نکردم حتی تا رستوران هم رفتم منتهی توی … دیر گفتی منم دیر رسیدم
+
+واقعاً ببخشید
+تا فهمیدم بدو بدو از مغازه اومدم.
+
+خودمم خیلیییی ناراحت شدم از اینکه فرصت داشتم ولی نشد ببینمت.
+
+عزیز دلم لطفاً قبلش به من بگو من قبل تو اونجا باشم
+و
+می‌ترسم از اینکه اینترنتا دوباره قطع شه هر وقت تونستی بهم زنگ بزن.
+
+(عزیزم هر شب ویدئو مسیج هاتو می‌بینم، خواستم بهت بگم که هر روز خوشگل‌تر از دیروز می‌شی)
+
+الهی دور سرت بگردم❤️
+  </div>
+
+  <div class="signature">
+    برای سیندرلای رویاهای من✨
+  </div>
+</div>
+
+<div class="scroll-hint" id="scrollHint">
+  اسکرول کن! 💙
+</div>
+
+<div class="footer">Made with love ❤️</div>
+
+<audio id="music" src="music.mp3" loop></audio>
 
 <script>
-(() => {
-  const stage = document.getElementById('stage');
-  const paper = document.getElementById('paper');
-  const hint = document.getElementById('hint');
-  const label = document.getElementById('stageLabel');
-  const close = document.getElementById('closePaper');
-  const music = document.getElementById('bgMusic');
-  const messageOverlay = document.getElementById('messageOverlay');
-  const continueMessage = document.getElementById('continueMessage');
+const envelope = document.getElementById("envelope");
+const paper = document.getElementById("paper");
+const music = document.getElementById("music");
+const scrollHint = document.getElementById("scrollHint");
 
-  let step = 0;
-  let musicStarted = false;
+let opened = false;
 
-  music.volume = 0.5;
+envelope.addEventListener("click", () => {
+  if (opened) return;
 
-  function playMusic() {
-    if (musicStarted) return;
-    music.play().then(() => {
-      musicStarted = true;
-    }).catch(error => {
-      console.warn('پخش موسیقی انجام نشد:', error);
-    });
-  }
+  opened = true;
 
-  function advance() {
-    if (step === 0) {
-      playMusic();
-      stage.classList.add('turn');
-      label.textContent = 'حالا دوباره روی پاکت بزن…';
-      hint.textContent = 'یه چیزی داخل این پاکت منتظرته…';
-      step = 1;
+  envelope.classList.add("open");
 
-    } else if (step === 1) {
-      stage.classList.remove('turn');
-      stage.classList.add('opened');
-      label.textContent = 'نامه داره باز میشه…';
-      hint.textContent = 'یه سورپرایز کوچیک برات دارم…';
+  music.play().catch(() => {});
 
-      setTimeout(() => {
-        paper.classList.add('visible');
-        messageOverlay.classList.add('show');
-      }, 700);
+  setTimeout(() => {
+    paper.classList.add("show");
+    scrollHint.classList.add("show");
 
-      step = 2;
-    }
-  }
+    setTimeout(() => {
+      scrollHint.classList.remove("show");
+    }, 5000);
 
-  stage.addEventListener('click', advance);
+  }, 700);
+});
 
-  stage.addEventListener('keydown', event => {
-    if (event.key === 'Enter' || event.key === ' ') {
-      event.preventDefault();
-      advance();
-    }
-  });
+// Floating hearts
+function createHeart() {
+  const heart = document.createElement("div");
+  heart.className = "heart";
 
-  continueMessage.addEventListener('click', () => {
-    messageOverlay.classList.remove('show');
-    paper.classList.add('unfolded');
-    label.textContent = 'نامه‌ات باز شد ❤️';
-    hint.textContent = 'با خیال راحت بخون... ❤️';
-    step = 3;
-  });
+  const hearts = ["❤️", "💗", "💕", "💖", "💙"];
+  heart.innerHTML = hearts[Math.floor(Math.random() * hearts.length)];
 
-  close.addEventListener('click', event => {
-    event.stopPropagation();
-    paper.classList.remove('unfolded', 'visible');
-    messageOverlay.classList.remove('show');
-    stage.classList.remove('opened', 'turn');
-    step = 0;
-    label.textContent = 'لمس کن تا نامه بچرخه…';
-    hint.textContent = 'برای دیدن چیزی که برات آماده شده، روی نامه بزن.';
-  });
+  heart.style.left = Math.random() * 100 + "vw";
+  heart.style.fontSize = (12 + Math.random() * 18) + "px";
+  heart.style.animationDuration = (5 + Math.random() * 5) + "s";
 
-  function heart() {
-    const h = document.createElement('span');
-    h.className = 'heart';
-    h.textContent = Math.random() > .25 ? '♥' : '❤';
-    h.style.left = (Math.random() * 100) + 'vw';
-    h.style.fontSize = (12 + Math.random() * 20) + 'px';
-    h.style.animationDuration = (6 + Math.random() * 6) + 's';
-    document.body.appendChild(h);
-    setTimeout(() => h.remove(), 12500);
-  }
+  document.body.appendChild(heart);
 
-  for (let i = 0; i < 9; i++) {
-    setTimeout(heart, i * 450);
-  }
+  setTimeout(() => {
+    heart.remove();
+  }, 10000);
+}
 
-  setInterval(heart, 850);
-})();
+setInterval(createHeart, 700);
 </script>
+
 </body>
 </html>
